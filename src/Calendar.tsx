@@ -1,33 +1,45 @@
-import React from "react";
+import { CSSProperties, Fragment, useMemo } from "react";
 import {
-  monthToNumber,
-  Month,
-  getStartDate,
-  getEndDate,
-  getDatesInRange,
+    CalendarStartDay,
+    getAllDatesOnPage,
+    getPageForTodaysDate,
+    Page
 } from "./helpers";
 
 interface CalendarProps {
-  page: {
-    year: number;
-    month: Month;
-  };
+    page?: Page;
+    style?: CSSProperties;
+    renderDate?: (props: { date: Date }) => JSX.Element;
+    calendarStartDay?: CalendarStartDay;
 }
 
+const getCalendarStyle = (style?: CSSProperties) => ({
+    display: "grid",
+    gridTemplateColumns: "repeat(7, 1fr)",
+    gridTemplateRows: "repeat(6, 1fr)",
+    ...style
+});
+
+const defaultRenderDate = ({ date }: { date: Date }) => <button>{date.getDate()}</button>
+
 export function Calendar(props: CalendarProps) {
-  const startDate = getStartDate(props.page.year, props.page.month);
+    const page = props.page ?? getPageForTodaysDate();
+    const renderDate = props.renderDate ?? defaultRenderDate;
+    const style = getCalendarStyle(props.style);
+    const calendarStartDay = props.calendarStartDay ?? "monday";
 
-  const endDate = getEndDate(props.page.year, props.page.month);
+    const dates = useMemo(
+        () => getAllDatesOnPage(page, calendarStartDay).map(
+            date => <Fragment key={date.toString()}>
+                {renderDate({ date })}
+            </Fragment>
+        )
+        , [page, renderDate, calendarStartDay]);
 
-  const month = getDatesInRange(startDate, endDate);
-
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
-      {"it is the month of " + props.page.month + " " + props.page.year}
-
-      {month.map((n) => (
-        <button type="button">{n.getDate()}</button>
-      ))}
-    </div>
-  );
+    return (
+        <>
+            {"it is the month of " + page.month + " " + page.year}
+            <div style={style}> {dates} </div>
+        </>
+    );
 }

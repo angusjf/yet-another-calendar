@@ -1,9 +1,9 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { Calendar } from "./Calendar";
+import { Page } from "./helpers";
 
 test("renders month and year (may 2022)", () => {
-  const page = { year: 2022, month: "may" as const };
+  const page: Page = { year: 2022, month: "may" };
   render(<Calendar page={page} />);
 
   const year = screen.getByText(/2022/i);
@@ -14,7 +14,7 @@ test("renders month and year (may 2022)", () => {
 });
 
 test("renders month and year (april 2023)", () => {
-  const page = { year: 2023, month: "apr" as const };
+  const page: Page = { year: 2023, month: "apr" };
   render(<Calendar page={page} />);
 
   const year = screen.getByText(/2023/i);
@@ -25,21 +25,31 @@ test("renders month and year (april 2023)", () => {
 });
 
 test("renders elements for all 30 days in april", () => {
-  const page = { year: 2023, month: "apr" as const };
+  const page: Page = { year: 2023, month: "may" };
   render(<Calendar page={page} />);
 
-  for (let i = 1; i <= 30; i++) {
-    const button = screen.getByText(i.toString());
-    expect(button).toBeInTheDocument();
+  for (let i = 1; i <= 31; i++) {
+    const buttons = screen.getAllByText(i.toString());
+    expect(buttons.length).toBeGreaterThanOrEqual(1);
   }
 });
 
 test("renders elements for all 31 days in may", () => {
-  const page = { year: 2023, month: "may" as const };
+  const page: Page = { year: 2023, month: "may" };
   render(<Calendar page={page} />);
 
+  let duplicates = 0;
+  let total = 0;
+
   for (let i = 1; i <= 31; i++) {
-    const button = screen.getByText(i.toString());
-    expect(button).toBeInTheDocument();
+    const buttons = screen.getAllByText(i.toString());
+    expect(buttons.length).toBeGreaterThanOrEqual(1);
+    if (buttons.length === 2) {
+        duplicates += 1;
+    }
+    total += buttons.length;
   }
+
+  expect(duplicates).toBeGreaterThanOrEqual(10);
+  expect(total).toBe(7 * 6);
 });
