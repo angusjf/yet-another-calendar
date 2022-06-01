@@ -6,11 +6,16 @@ import {
     Page
 } from "./helpers";
 
-interface CalendarProps {
+export interface CalendarProps {
     page?: Page;
     style?: CSSProperties;
-    renderDate?: (props: { date: Date }) => JSX.Element;
+    renderDate?: (props: DateRenderProps) => JSX.Element;
     calendarStartDay?: CalendarStartDay;
+}
+
+export interface DateRenderProps {
+    date: Date;
+    belongsToPage: "previous" | "current" | "next";
 }
 
 const getCalendarStyle = (style?: CSSProperties) => ({
@@ -20,7 +25,7 @@ const getCalendarStyle = (style?: CSSProperties) => ({
     ...style
 });
 
-const defaultRenderDate = ({ date }: { date: Date }) => <button>{date.getDate()}</button>
+const defaultRenderDate = ({ date }: DateRenderProps) => <button>{date.getDate()}</button>
 
 export function Calendar(props: CalendarProps) {
     const page = props.page ?? getPageForTodaysDate();
@@ -29,12 +34,23 @@ export function Calendar(props: CalendarProps) {
     const calendarStartDay = props.calendarStartDay ?? "monday";
 
     const dates = useMemo(
-        () => getAllDatesOnPage(page, calendarStartDay).map(
-            date => <Fragment key={date.toString()}>
-                {renderDate({ date })}
-            </Fragment>
-        )
-        , [page, renderDate, calendarStartDay]);
+        () => {
+            const {underflow, month, overflow } = getAllDatesOnPage(page, calendarStartDay)
+
+            return [
+                underflow.map( date => <Fragment key={date.toString()}>
+                            {renderDate({ date, belongsToPage: "previous" })}
+                        </Fragment>),
+                month.map( date => <Fragment key={date.toString()}>
+                            {renderDate({ date, belongsToPage: "current" })}
+                        </Fragment>),
+                overflow.map( date => <Fragment key={date.toString()}>
+                            {renderDate({ date, belongsToPage: "next" })}
+                        </Fragment>)
+            ].flat()
+        }
+        , [page, renderDate, calendarStartDay]
+    );
 
     return (
         <>

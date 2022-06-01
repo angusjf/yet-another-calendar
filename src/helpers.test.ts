@@ -69,9 +69,9 @@ import  { getAllDatesOnPage, nextPage, Page, previousPage } from "./helpers";
 test("getAllDatesOnPage displays correct dates for Jan 2020", () => {
   const page: Page = { month: "jan", year: 2022}
 
-  const datesOnPage = getAllDatesOnPage(page, "sunday");
+  const {underflow, month, overflow} = getAllDatesOnPage(page, "sunday");
 
-  expect(datesOnPage.length).toBe(7 * 6);
+  expect(underflow.length + month.length + overflow.length).toBe(7 * 6);
 });
 
 test("nextPage works for Jan 2020", () => {

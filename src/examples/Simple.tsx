@@ -1,7 +1,7 @@
 import { Calendar } from "../Calendar"
 import { usePage } from "../usePage"
 
-const Date = ({date}: {date: Date}) => {
+const CustomDate = ({date}: {date: Date}) => {
     return <button>{date.getDate()}</button>
 }
 
@@ -11,11 +11,11 @@ export const Simple = () => {
     return (
         <div>
             <div>
-                <button onClick={previous}>⬅</button>
+                <button onClick={previous}>⬅ </button>
                 {page.month + " " + page.year}
-                <button onClick={next}>⮕</button>
+                <button onClick={next}>⮕ </button>
             </div>
-            <Calendar page={page} renderDate={Date} />
+            <Calendar page={page} renderDate={CustomDate} />
         </div>
     )
 }

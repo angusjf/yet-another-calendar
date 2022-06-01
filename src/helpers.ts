@@ -197,7 +197,7 @@ const getOverflow = (endDate: Date, numberOfDays: number) => {
     return underflow;
 };
 
-export const getAllDatesOnPage = (page: Page, calendarStartDay: CalendarStartDay): Date[] => {
+export const getAllDatesOnPage = (page: Page, calendarStartDay: CalendarStartDay): { underflow: Date[], month: Date[], overflow: Date[] } => {
     const startDate = getStartDate(page.year, page.month);
 
     const endDate = getEndDate(page.year, page.month);
@@ -208,7 +208,7 @@ export const getAllDatesOnPage = (page: Page, calendarStartDay: CalendarStartDay
 
     const overflow = getOverflow(endDate, 6 * 7 - underflow.length - month.length);
 
-    return [...underflow, ...month, ...overflow];
+    return {underflow, month, overflow};
 }
 
 export const nextPage = (page: Page): Page => {
