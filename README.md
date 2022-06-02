@@ -11,23 +11,24 @@ Prides itself on having both a **very simple API**, but also **extreme flexibili
 ## Usage
 
 ```js
-import { useState } from "react";
-import { Calendar, DateRenderProps } from "../Calendar";
-import { nextPage, Page } from "../helpers";
+import { useState } from "react"
+import { Calendar, Page, nextPage} from "yet-another-calendar"
 
-const Date = ({ date }: DateRenderProps) => <button>{date.getDate()}</button>;
+const Date = ({ date }) => <button>{date.getDate()}</button>
 
-export const Simple = () => {
-  const [page, setPage] = useState < Page > { month: "may", year: 2022 };
+const App = () => {
+  const [page, setPage] = useState<Page>({ month: "may", year: 2022 })
+
+  const next = () => setPage(current => nextPage(current))
 
   return (
     <div>
       {page.month + " " + page.year}
-      <button onClick={() => setPage(current => nextPage(current))}> ⮕ </button>
+      <button onClick={next}>⮕</button>
       <Calendar page={page} renderDate={Date} />
     </div>
-  );
-};
+  )
+}
 ```
 
 Looks like this - but **don't worry**, a little styling and it can look however you want!
@@ -43,12 +44,10 @@ Looks like this - but **don't worry**, a little styling and it can look however 
 ## Why this Calendar Library?
 
 - **Complete behaviour flexibility**, support for:
-
   - **date pickers**
   - Multiple **range** selectors
   - Disabled dates
   - & more!
-
 - **Simple** API
   - Just 2 props!
 - All _styles_ can be controlled like any other React component
@@ -57,6 +56,7 @@ Looks like this - but **don't worry**, a little styling and it can look however 
 - Fully **typed**!
 - Fully **tested**!
 - Loads of **examples**!
+- **32x smaller** bundle size compared to the most popular competitors!
 
 ## When is this not the right library?
 
