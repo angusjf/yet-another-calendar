@@ -1,21 +1,17 @@
-import { Calendar } from "../Calendar"
-import { usePage } from "../usePage"
+import { useState } from 'react'
+import { Calendar, DateRenderProps } from '../Calendar'
+import { nextPage, Page } from '../lib'
 
-const CustomDate = ({date}: {date: Date}) => {
-    return <button>{date.getDate()}</button>
-}
+const Date = ({ date }: DateRenderProps) => <button>{date.getDate()}</button>
 
 export const Simple = () => {
-    const [ page, { previous, next} ] = usePage({ month: "may", year: 2022});
+	const [page, setPage] = useState<Page>({ month: 'may', year: 2022 })
 
-    return (
-        <div>
-            <div>
-                <button onClick={previous}>⬅ </button>
-                {page.month + " " + page.year}
-                <button onClick={next}>⮕ </button>
-            </div>
-            <Calendar page={page} renderDate={CustomDate} />
-        </div>
-    )
+	return (
+		<div>
+			{page.month + ' ' + page.year}
+			<button onClick={() => setPage((current) => nextPage(current))}>⮕ </button>
+			<Calendar page={page} renderDate={Date} />
+		</div>
+	)
 }
