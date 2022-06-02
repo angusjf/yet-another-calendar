@@ -2,28 +2,6 @@ import { render, screen } from "@testing-library/react";
 import { Calendar } from "./Calendar";
 import { Page } from "./helpers";
 
-test("renders month and year (may 2022)", () => {
-  const page: Page = { year: 2022, month: "may" };
-  render(<Calendar page={page} />);
-
-  const year = screen.getByText(/2022/i);
-  expect(year).toBeInTheDocument();
-
-  const month = screen.getByText(/may/i);
-  expect(month).toBeInTheDocument();
-});
-
-test("renders month and year (april 2023)", () => {
-  const page: Page = { year: 2023, month: "apr" };
-  render(<Calendar page={page} />);
-
-  const year = screen.getByText(/2023/i);
-  expect(year).toBeInTheDocument();
-
-  const month = screen.getByText(/apr/i);
-  expect(month).toBeInTheDocument();
-});
-
 test("renders elements for all 30 days in april", () => {
   const page: Page = { year: 2023, month: "may" };
   render(<Calendar page={page} />);

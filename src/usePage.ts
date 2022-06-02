@@ -1,5 +1,5 @@
 import { Reducer, useCallback, useReducer } from "react";
-import { Page, nextPage, previousPage } from "./helpers";
+import { Page, nextPage, previousPage, pageForDate } from "./helpers";
 
 type Action
  = { type: "previous" }
@@ -21,6 +21,7 @@ interface PageFunctions {
     next: () => void;
     previous: () => void;
     setPage: (page: Page) => void;
+    focusDate: (date: Date) => void;
 }
 
 export const usePage = (initialPage: Page): [Page, PageFunctions] => {
@@ -35,5 +36,10 @@ export const usePage = (initialPage: Page): [Page, PageFunctions] => {
     []
   );
 
-  return [page, { next, previous, setPage }];
+  const focusDate = useCallback(
+    (date: Date) => setPage(pageForDate(date)),
+    [setPage]
+  );
+
+  return [page, { next, previous, setPage, focusDate }];
 };

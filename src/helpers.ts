@@ -93,43 +93,6 @@ function monthToNumber(month: Month): number {
     return 11;
 }
 
-function nextMonth(month: Month): Month {
-    if (month === "jan") {
-        return "feb";
-    }
-    if (month === "feb") {
-        return "mar";
-    }
-    if (month === "mar") {
-        return "apr";
-    }
-    if (month === "apr") {
-        return "may";
-    }
-    if (month === "may") {
-        return "jun";
-    }
-    if (month === "jun") {
-        return "jul";
-    }
-    if (month === "jul") {
-        return "aug";
-    }
-    if (month === "aug") {
-        return "sep";
-    }
-    if (month === "sep") {
-        return "oct";
-    }
-    if (month === "oct") {
-        return "nov";
-    }
-    if (month === "nov") {
-        return "dec";
-    }
-    return "jan";
-}
-
 function previousMonth(month: Month): Month {
     if (month === "jan") { return "dec"; }
     if (month === "feb") { return "jan"; }
@@ -145,12 +108,12 @@ function previousMonth(month: Month): Month {
     return "nov";
 }
 
-function getStartDate(year: number, month: Month): Date {
+export function getStartDate({year, month}: Page): Date {
     return new Date(year, monthToNumber(month), 1);
 }
 
-function getEndDate(year: number, month: Month): Date {
-    const endDate = getStartDate(year, nextMonth(month));
+function getEndDate({year, month}: Page): Date {
+    const endDate = getStartDate(nextPage({year, month}));
 
     endDate.setDate(endDate.getDate() - 1);
     return endDate;
@@ -198,9 +161,9 @@ const getOverflow = (endDate: Date, numberOfDays: number) => {
 };
 
 export const getAllDatesOnPage = (page: Page, calendarStartDay: CalendarStartDay): { underflow: Date[], month: Date[], overflow: Date[] } => {
-    const startDate = getStartDate(page.year, page.month);
+    const startDate = getStartDate(page);
 
-    const endDate = getEndDate(page.year, page.month);
+    const endDate = getEndDate(page);
 
     const underflow = getUnderflow(startDate, calendarStartDay);
 
@@ -212,6 +175,43 @@ export const getAllDatesOnPage = (page: Page, calendarStartDay: CalendarStartDay
 }
 
 export const nextPage = (page: Page): Page => {
+    function nextMonth(month: Month): Month {
+        if (month === "jan") {
+            return "feb";
+        }
+        if (month === "feb") {
+            return "mar";
+        }
+        if (month === "mar") {
+            return "apr";
+        }
+        if (month === "apr") {
+            return "may";
+        }
+        if (month === "may") {
+            return "jun";
+        }
+        if (month === "jun") {
+            return "jul";
+        }
+        if (month === "jul") {
+            return "aug";
+        }
+        if (month === "aug") {
+            return "sep";
+        }
+        if (month === "sep") {
+            return "oct";
+        }
+        if (month === "oct") {
+            return "nov";
+        }
+        if (month === "nov") {
+            return "dec";
+        }
+        return "jan";
+    }
+
     const newMonth = nextMonth(page.month);
 
     if (newMonth === 'jan') {
@@ -230,3 +230,8 @@ export const previousPage = (page: Page): Page => {
         return {month: newMonth, year: page.year}
     }
 }
+
+export const pageForDate = (date : Date) : Page => {
+    return { year: date.getFullYear(), month: monthFromNumber(date.getMonth()) };
+}
+

@@ -1,9 +1,13 @@
-# `react-custom-calendar` - A Simple Yet **Highly Customizable** Calendar Library for React:
+# `yet-another-calendar`
 
-## The All-Important Example Snippet
+A simple yet highly customizable calendar library for React.
+
+Very simple API + Flexibility to match
+
+## Usage
 
 ```js
-import { Calendar, usePage } from "react-custom-calendar";
+import { Calendar, usePage } from "yet-another-calendar";
 
 const Date = ({ date }) => <button>{date.getDate()}</button>;
 
@@ -53,3 +57,4 @@ Developers should be able to control their calendars with `props`!
 This way the behaviour of the calendar is _predictable_ and _customisable_.
 
 This library was built with the idea that the developer should have complete control over their components state. It is proof that 'dumb' components only allow for greater flexibility, but also make interfaces simpler!
+

@@ -52,10 +52,5 @@ export function Calendar(props: CalendarProps) {
         , [page, renderDate, calendarStartDay]
     );
 
-    return (
-        <>
-            {"it is the month of " + page.month + " " + page.year}
-            <div style={style}> {dates} </div>
-        </>
-    );
+    return <div style={style}>{dates}</div>;
 }
