@@ -1,7 +1,7 @@
 {
   "name": "yet-another-calendar",
   "description": "A simple yet highly customizable calendar library for React",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "files": [
     "README.md",
     "LICENCE",
