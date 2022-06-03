@@ -1,8 +1,8 @@
-import { CSSProperties, Fragment, useMemo } from 'react'
+import { CSSProperties, Fragment, memo, useMemo } from 'react'
 import {
 	CalendarStartDay,
 	getAllDatesOnPage,
-	getPageForTodaysDate,
+	pageForDate,
 	Page,
 } from './lib'
 
@@ -29,8 +29,10 @@ const defaultRenderDate = ({ date }: DateRenderProps) => (
 	<button>{date.getDate()}</button>
 )
 
-export function Calendar(props: CalendarProps) {
-	const page = props.page ?? getPageForTodaysDate()
+const today = new Date()
+
+const Calendar = (props: CalendarProps) => {
+	const page = props.page ?? pageForDate(today)
 	const renderDate = props.renderDate ?? defaultRenderDate
 	const style = getCalendarStyle(props.style)
 	const calendarStartDay = props.calendarStartDay ?? 'monday'
@@ -62,3 +64,18 @@ export function Calendar(props: CalendarProps) {
 
 	return <div style={style}>{dates}</div>
 }
+
+const MemoizedCalendar = memo(Calendar, (prevProps, nextProps) => {
+	const propsAreEqual = 
+		nextProps.calendarStartDay === prevProps.calendarStartDay
+		&& nextProps.page?.month === prevProps.page?.month
+		&& nextProps.page?.year === prevProps.page?.year
+		&& nextProps.renderDate === prevProps.renderDate
+		&& nextProps.style === prevProps.style
+	
+	return propsAreEqual
+})
+
+MemoizedCalendar.displayName = 'Calendar'
+
+export { MemoizedCalendar as Calendar }

@@ -14,7 +14,8 @@
     "react": "^18.1.0"
   },
   "scripts": {
-    "build": "rm -rf dist types && mkdir dist && babel src/index.ts > dist/index.js && babel src/Calendar.tsx > dist/Calendar.js && babel src/lib.ts > dist/lib.js && tsc src/index.ts --declaration --emitDeclarationOnly --jsx react-jsxdev --outDir types"
+    "build": "rm -rf dist types && mkdir dist && babel src/index.ts > dist/index.js && babel src/Calendar.tsx > dist/Calendar.js && babel src/lib.ts > dist/lib.js && tsc src/index.ts --declaration --emitDeclarationOnly --jsx react-jsxdev --outDir types",
+    "test": "react-scripts test"
   },
   "keywords": [
     "react",
@@ -34,6 +35,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "react-test-renderer": "^18.0.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
@@ -41,8 +43,6 @@
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "babel-jest": "^28.1.0",
-    "eslint": "^8.16.0",
-    "eslint-plugin-react": "^7.30.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
     "ts-jest": "^28.0.3",
@@ -50,5 +50,17 @@
   },
   "bugs": {
     "url": "https://github.com/angusjf/yet-another-calendar/issues"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

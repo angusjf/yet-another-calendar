@@ -39,7 +39,7 @@ Looks like this - but **don't worry**, a little styling and it can look however 
 
 ![date range selector](./images/date-range.png)
 
-[See this example on CodePen](todo)
+[See this example on CodePen](https://codepen.io/angusjf/pen/bGLKeEj)
 
 ## Why this Calendar Library?
 
@@ -67,9 +67,9 @@ a calendar in your website ASAP - this library might not be for you.
 
 ### `<Calendar>`
 
-This is the only exported React Component.
+This is the only exported React Component. All it's props are optional, but 
 
-### `<Calendar>` Props
+### `CalendarProps`
 
 | Prop               | Type                                      | Example                                     |
 | ------------------ | ----------------------------------------- | ------------------------------------------- |
@@ -78,12 +78,35 @@ This is the only exported React Component.
 | `style`            | `CSSProperties`                           | `{ backgroundColor: 'red' }`                |
 | `calendarStartDay` | `CalendarStartDay`                        | `"sunday"`                                  |
 
-### `DateRenderProps` (for `renderDate`)
+### `DateRenderProps`
+
+For `Calendar`'s `renderDate` prop (above).
 
 | Prop            | Type                                |
 | --------------- | ----------------------------------- |
 | `date`          | `Date`                              |
 | `belongsToPage` | `"previous" \| "current" \| "next"` |
+
+### `Page`
+
+| Field           | Type                                |
+| --------------- | ----------------------------------- |
+| `year`          | `number`                              |
+| `month` | `"jan" \| "feb" \| ... \| "dec"` |
+
+### CalendarStartDay
+
+Used to control if the calendar starts on a Monday or Sunday.
+
+### Utility Functions
+| Function | Type |
+| --- | --- |
+| `nextPage` | `(page: Page) => Page` |
+| `previousPage`  |` (page: Page) => Page ` |
+| `firstDate`  |` (page: Page) => Date` |
+| `lastDate`  |` (page: Page) => Date` |
+| `pageForDate`  |` (date: Date) => Page ` |
+  
 
 ## Motivation
 

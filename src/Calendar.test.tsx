@@ -1,33 +1,35 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { render, screen } from '@testing-library/react'
 import { Calendar } from './Calendar'
-import { Page } from './lib'
+import { Month, Page } from './lib'
 
-test('renders elements for all 30 days in april', () => {
-	const page: Page = { year: 2023, month: 'may' }
+const testData: [number, number, Month][] = 
+ [
+	[31, 2000, 'jan'],
+	[28, 2001, 'feb'],
+	[29, 2000, 'feb'],
+	[31, 2002, 'mar'],
+	[30, 2003, 'apr'],
+	[31, 2004, 'may'],
+	[30, 2005, 'jun'],
+	[31, 2006, 'jul'],
+	[31, 2007, 'aug'],
+	[30, 2008, 'sep'],
+	[31, 2009, 'oct'],
+	[30, 2010, 'nov'],
+	[31, 2011, 'dec'],
+  ]
+
+test.concurrent.each(testData)('renders all %i days in %s', (n, year, month) => {
+	const page: Page = { year, month }
+
 	render(<Calendar page={page} />)
 
-	for (let i = 1; i <= 31; i++) {
+	for (let i = 1; i <= n; i++) {
 		const buttons = screen.getAllByText(i.toString())
 		expect(buttons.length).toBeGreaterThanOrEqual(1)
 	}
-})
-
-test('renders elements for all 31 days in may', () => {
-	const page: Page = { year: 2023, month: 'may' }
-	render(<Calendar page={page} />)
-
-	let duplicates = 0
-	let total = 0
-
-	for (let i = 1; i <= 31; i++) {
-		const buttons = screen.getAllByText(i.toString())
-		expect(buttons.length).toBeGreaterThanOrEqual(1)
-		if (buttons.length === 2) {
-			duplicates += 1
-		}
-		total += buttons.length
-	}
-
-	expect(duplicates).toBeGreaterThanOrEqual(10)
-	expect(total).toBe(7 * 6)
-})
+  });
