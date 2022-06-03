@@ -7,15 +7,15 @@ import {
 } from './lib'
 
 export interface CalendarProps {
-  page?: Page;
-  style?: CSSProperties;
-  renderDate?: (props: DateRenderProps) => JSX.Element;
-  calendarStartDay?: CalendarStartDay;
+	page?: Page;
+	style?: CSSProperties;
+	renderDate?: (props: DateRenderProps) => JSX.Element;
+	calendarStartDay?: CalendarStartDay;
 }
 
 export interface DateRenderProps {
-  date: Date;
-  belongsToPage: 'previous' | 'current' | 'next';
+	date: Date;
+	belongsToPage: 'previous' | 'current' | 'next';
 }
 
 const getCalendarStyle = (style?: CSSProperties) => ({
@@ -66,13 +66,13 @@ const Calendar = (props: CalendarProps) => {
 }
 
 const MemoizedCalendar = memo(Calendar, (prevProps, nextProps) => {
-	const propsAreEqual = 
+	const propsAreEqual =
 		nextProps.calendarStartDay === prevProps.calendarStartDay
 		&& nextProps.page?.month === prevProps.page?.month
 		&& nextProps.page?.year === prevProps.page?.year
 		&& nextProps.renderDate === prevProps.renderDate
 		&& nextProps.style === prevProps.style
-	
+
 	return propsAreEqual
 })
 

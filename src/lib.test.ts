@@ -75,6 +75,27 @@ test('previousPage works for Dec 2020', () => {
 	expect(previousPage({ month: 'dec', year: 2020 })).toEqual({ month: 'nov' as const, year: 2020 })
 })
 
-test('pageForDate works for Dec 2020', () => {
-	expect(pageForDate(new Date(2020, 11, 31))).toEqual({ month: 'dec', year: 2020 })
+test.each([
+	[0, 'jan'],
+	[1, 'feb'],
+	[2, 'mar'],
+	[3, 'apr'],
+	[4, 'may'],
+	[5, 'jun'],
+	[6, 'jul'],
+	[7, 'aug'],
+	[8, 'sep'],
+	[9, 'oct'],
+	[10, 'nov'],
+	[11, 'dec']
+])('pageForDate works for %s 2020', (monthNumber, monthName) => {
+	expect(pageForDate(new Date(2020, monthNumber, 20))).toEqual({ month: monthName, year: 2020 })
 })
+
+test('previousPage wraps around', () => {
+	let page: Page = { month: "oct", year: 1 }
+	for (let i = 0; i < 12; i++) {
+		page = previousPage(page);
+	}
+	expect(page).toEqual({ month: 'oct', year: 0 })
+});

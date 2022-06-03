@@ -54,7 +54,7 @@ Looks like this - but **don't worry**, a little styling and it can look however 
   - For example, using `styled-components`
 - Fully **controlled**!
 - Fully **typed**!
-- Fully **tested**!
+- Fully **tested** - 100% code coverage!
 - Loads of **examples**!
 - **32x smaller** bundle size compared to the most popular competitors!
 
