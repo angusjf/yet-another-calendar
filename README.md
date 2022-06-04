@@ -10,25 +10,23 @@ Prides itself on having both a **very simple API**, but also **extreme flexibili
 
 ## Usage
 
-```js
-import { useState } from "react"
-import { Calendar, Page, nextPage} from "yet-another-calendar"
+```tsx
+import { useState } from "react";
+import { Calendar, Page, nextPage } from "yet-another-calendar";
 
-const Date = ({ date }) => <button>{date.getDate()}</button>
+const Date = ({ date }) => <button>{date.getDate()}</button>;
 
 const App = () => {
-  const [page, setPage] = useState<Page>({ month: "may", year: 2022 })
-
-  const next = () => setPage(current => nextPage(current))
+  const [page, setPage] = useState<Page>({ month: "may", year: 2022 });
 
   return (
     <div>
-      {page.month + " " + page.year}
-      <button onClick={next}>⮕</button>
+      {page.month} {page.year}
+      <button onClick={() => setPage(nextPage)}>⮕</button>
       <Calendar page={page} renderDate={Date} />
     </div>
-  )
-}
+  );
+};
 ```
 
 Looks like this - but **don't worry**, a little styling and it can look however you want!
@@ -67,7 +65,7 @@ a calendar in your website ASAP - this library might not be for you.
 
 ### `<Calendar>`
 
-This is the only exported React Component. All it's props are optional, but 
+This is the only exported React Component. All the props are optional, but you'll probably want to set `page` and `renderDate`.
 
 ### `CalendarProps`
 
@@ -89,9 +87,9 @@ For `Calendar`'s `renderDate` prop (above).
 
 ### `Page`
 
-| Field           | Type                                |
-| --------------- | ----------------------------------- |
-| `year`          | `number`                              |
+| Field   | Type                             |
+| ------- | -------------------------------- |
+| `year`  | `number`                         |
 | `month` | `"jan" \| "feb" \| ... \| "dec"` |
 
 ### CalendarStartDay
@@ -99,14 +97,14 @@ For `Calendar`'s `renderDate` prop (above).
 Used to control if the calendar starts on a Monday or Sunday.
 
 ### Utility Functions
-| Function | Type |
-| --- | --- |
-| `nextPage` | `(page: Page) => Page` |
-| `previousPage`  |` (page: Page) => Page ` |
-| `firstDate`  |` (page: Page) => Date` |
-| `lastDate`  |` (page: Page) => Date` |
-| `pageForDate`  |` (date: Date) => Page ` |
-  
+
+| Function       | Type                   |
+| -------------- | ---------------------- |
+| `nextPage`     | `(page: Page) => Page` |
+| `previousPage` | `(page: Page) => Page` |
+| `firstDate`    | `(page: Page) => Date` |
+| `lastDate`     | `(page: Page) => Date` |
+| `pageForDate`  | `(date: Date) => Page` |
 
 ## Motivation
 
