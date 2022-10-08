@@ -1,4 +1,4 @@
-import { CSSProperties, Fragment, memo, useMemo } from 'react'
+import React, { CSSProperties, Fragment, memo, useMemo } from 'react'
 import {
 	CalendarStartDay,
 	getAllDatesOnPage,
