@@ -11,7 +11,7 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist types && tsc",
+    "build": "rm -rf dist && tsc",
     "test": "jest"
   },
   "keywords": [
