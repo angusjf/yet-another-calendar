@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 
+import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { Calendar } from './Calendar'
 import { Month, nextPage, Page } from './lib'
