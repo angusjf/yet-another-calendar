@@ -6,9 +6,8 @@ import {
 	Page,
 } from './lib'
 
-export interface CalendarProps {
+export interface CalendarProps extends React.ComponentPropsWithRef<'div'> {
 	page?: Page;
-	style?: CSSProperties;
 	renderDate?: (props: DateRenderProps) => JSX.Element;
 	calendarStartDay?: CalendarStartDay;
 }
@@ -31,11 +30,25 @@ const defaultRenderDate = ({ date }: DateRenderProps) => (
 
 const today = new Date()
 
+const propsOrDefault = ({
+	page,
+	renderDate,
+	calendarStartDay,
+	...divProps
+}: CalendarProps) => ({
+	page: page ?? pageForDate(today),
+	renderDate: renderDate ?? defaultRenderDate,
+	calendarStartDay: calendarStartDay ?? 'monday',
+	divProps: { ...divProps, style: getCalendarStyle(divProps.style) },
+})
+
 const Calendar = (props: CalendarProps) => {
-	const page = props.page ?? pageForDate(today)
-	const renderDate = props.renderDate ?? defaultRenderDate
-	const style = getCalendarStyle(props.style)
-	const calendarStartDay = props.calendarStartDay ?? 'monday'
+	const {
+		page,
+		renderDate: Date,
+		calendarStartDay,
+		divProps,
+	} = propsOrDefault(props)
 
 	const dates = useMemo(() => {
 		const { underflow, month, overflow } = getAllDatesOnPage(
@@ -46,35 +59,26 @@ const Calendar = (props: CalendarProps) => {
 		return [
 			underflow.map((date) => (
 				<Fragment key={date.toString()}>
-					{renderDate({ date, belongsToPage: 'previous' })}
+					<Date date={date} belongsToPage='previous' />
 				</Fragment>
 			)),
 			month.map((date) => (
 				<Fragment key={date.toString()}>
-					{renderDate({ date, belongsToPage: 'current' })}
+					<Date date={date} belongsToPage='current' />
 				</Fragment>
 			)),
 			overflow.map((date) => (
 				<Fragment key={date.toString()}>
-					{renderDate({ date, belongsToPage: 'next' })}
+					<Date date={date} belongsToPage='next' />
 				</Fragment>
 			)),
 		].flat()
-	}, [page, renderDate, calendarStartDay])
+	}, [page, Date, calendarStartDay])
 
-	return <div style={style}>{dates}</div>
+	return <div {...divProps}>{dates}</div>
 }
 
-const MemoizedCalendar = memo(Calendar, (prevProps, nextProps) => {
-	const propsAreEqual =
-		nextProps.calendarStartDay === prevProps.calendarStartDay
-		&& nextProps.page?.month === prevProps.page?.month
-		&& nextProps.page?.year === prevProps.page?.year
-		&& nextProps.renderDate === prevProps.renderDate
-		&& nextProps.style === prevProps.style
-
-	return propsAreEqual
-})
+const MemoizedCalendar = memo(Calendar)
 
 MemoizedCalendar.displayName = 'Calendar'
 
