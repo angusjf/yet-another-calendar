@@ -29,16 +29,6 @@ const App = () => {
 };
 ```
 
-Looks like this - but **don't worry**, a little styling and it can look however you want!
-
-![Simple calendar example](./images/simple.png)
-
-## More Complex Example - "Date Range Picker"
-
-![date range selector](./images/date-range.png)
-
-[See this example on CodePen](https://codepen.io/angusjf/pen/bGLKeEj)
-
 ## Why this Calendar Library?
 
 - **Complete behaviour flexibility**, support for:
@@ -55,6 +45,18 @@ Looks like this - but **don't worry**, a little styling and it can look however 
 - Fully **tested** - 100% code coverage!
 - Loads of **examples**!
 - **32x smaller** bundle size compared to the most popular competitors!
+- Fully **Internationalizable** & right-to-left option
+- Great support for **accessibility**
+
+Looks like this - but **don't worry**, a little styling and it can look however you want!
+
+![Simple calendar example](./images/simple.png)
+
+## More Complex Example - "Date Range Picker"
+
+![date range selector](./images/date-range.png)
+
+[See this example on CodePen](https://codepen.io/angusjf/pen/bGLKeEj)
 
 ## When is this not the right library?
 
@@ -73,8 +75,13 @@ This is the only exported React Component. All the props are optional, but you'l
 | ------------------ | ----------------------------------------- | ------------------------------------------- |
 | `page`             | `Page`                                    | `{ year: 2022, month: 'jan' }`              |
 | `renderDate`       | `(props: DateRenderProps) => JSX.Element` | `({date}) => <span>{date.getDate()}</span>` |
-| `style`            | `CSSProperties`                           | `{ backgroundColor: 'red' }`                |
 | `calendarStartDay` | `CalendarStartDay`                        | `"sunday"`                                  |
+
+All the props from `div` are also supported:
+
+```tsx
+<Calendar dir="rtl" style={{ backgroundColor: "red" }} />
+```
 
 ### `DateRenderProps`
 

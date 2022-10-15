@@ -74,22 +74,6 @@ test('does not re-render without prop change', () => {
 	expect(screen.queryAllByText("1").length).toBe(1)
 })
 
-
-test('does not re-render with superficial prop change', () => {
-	const page: Page = { year: 2022, month: "feb" }
-	const ref = { current: 0 }
-
-	const renderDate = () => <span>{++ref.current}</span>;
-
-	const { rerender } = render(<Calendar page={page} renderDate={renderDate} />)
-
-	expect(screen.getAllByText("1").length).toBe(1)
-
-	rerender(<Calendar page={{ year: 2022, month: "feb" }} renderDate={renderDate} />)
-
-	expect(screen.queryAllByText("1").length).toBe(1)
-})
-
 test('does re-render with meaningful prop change', () => {
 	const page: Page = { year: 2022, month: "feb" }
 	const ref = { current: 0 }
