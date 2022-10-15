@@ -1,13 +1,12 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { Simple } from './Simple';
-import { TwoPage } from './TwoPage';
+import { StrictMode } from "react";
+import ReactDom from "react-dom";
+// import { Simple } from "./Simple";
+import { TwoPage } from "./TwoPage";
 
-createRoot(
-  document.getElementById('root') as HTMLElement
-).render(
+ReactDom.render(
   <StrictMode>
     {/* <Simple /> */}
     <TwoPage />
-  </StrictMode>
+  </StrictMode>,
+  document.getElementById("root") as HTMLElement
 );

@@ -111,14 +111,14 @@ export const TwoPage = () => {
 	return (
 		<FormWithPanel
 			fields={<>
-				Arrival:
 				<DateInput
+					label="Arrival"
 					onFocus={() => setSelecting('rangeStart')}
 					selected={selecting === 'rangeStart'}
 					value={range?.start?.toDateString() ?? '?'}
 				/>
-				Departure:
 				<DateInput
+					label="Departure"
 					disabled={range === undefined}
 					onFocus={() => setSelecting('rangeEnd')}
 					selected={selecting === 'rangeEnd'}
@@ -198,25 +198,31 @@ const WeekdayTitles = () => (
 	</div>
 )
 
-export const DateInput = ({ value, selected, onFocus, disabled }: {
+export const DateInput = ({ value, selected, onFocus, disabled, label }: {
 	disabled?: boolean,
 	value: string,
 	selected: boolean,
 	onFocus: () => void
+	label: string
 }) => {
-	return <input
-		readOnly
-		value={value}
-		onFocus={onFocus}
-		onChange={() => undefined}
-		style={{
-			borderWidth: selected ? 3 : 1,
-			borderRadius: 3,
-			borderColor: selected ? primary : 'black',
-			borderStyle: 'solid'
-		}}
-		disabled={disabled}
-	/>
+
+	return <>
+		<label htmlFor={label}>{label}:</label>
+		<input
+			readOnly
+			id={label}
+			value={value}
+			onFocus={onFocus}
+			onChange={() => undefined}
+			style={{
+				borderWidth: selected ? 3 : 1,
+				borderRadius: 3,
+				borderColor: selected ? primary : 'black',
+				borderStyle: 'solid'
+			}}
+			disabled={disabled}
+		/>
+	</>
 }
 
 interface CustomDateProps extends DateRenderProps {
@@ -224,6 +230,8 @@ interface CustomDateProps extends DateRenderProps {
 	onClick: (date: Date) => void;
 	disabled: boolean;
 }
+
+const a11yOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } as const;
 
 const CustomDate = ({ date, selected, belongsToPage, onClick, disabled }: CustomDateProps) => {
 	const buttonStyle: CSSProperties = useMemo(() => {
@@ -349,6 +357,7 @@ const CustomDate = ({ date, selected, belongsToPage, onClick, disabled }: Custom
 					style={buttonStyle}
 					onClick={() => onClick(date)}
 					disabled={disabled}
+					aria-label={"Select Date " + date.toLocaleDateString('en', a11yOptions)}
 				>
 					{date.getDate()}
 				</button>
